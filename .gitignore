@@ -14,3 +14,27 @@ db.sqlite3
 # Django
 *.log
 /staticfiles/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.env
+
+# Virtualenv
+venv/
+ENV/
+env/
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+api/migrations/
+projet12/migrations/
+

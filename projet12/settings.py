@@ -10,6 +10,7 @@ SECRET_KEY = "django-insecure-<ton_secret_key>"  # Remplace par ta vraie clé
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+AUTH_USER_MODEL = 'api.Utilisateur'
 
 # --------------------------
 # APPS
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'api',
+    
 ]
 
 # --------------------------
