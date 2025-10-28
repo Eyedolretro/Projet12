@@ -109,11 +109,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # --------------------------
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',  # permet l'accès à tous les endpoints sans login
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # si tu veux activer JWT plus tard
     ],
 }
 
