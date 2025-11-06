@@ -1,6 +1,7 @@
 # serializers.py
 from rest_framework import serializers
 from .models import *
+from .models import Evenement
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,6 +17,7 @@ class EvenementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Evenement
         fields = '__all__'
+        read_only_fields = ('date',)  # ✅ la date ne doit pas être envoyée dans le POST
 
 class CommunicationSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import django.utils.timezone
 
 
 class Equipe(models.Model):
@@ -7,7 +8,6 @@ class Equipe(models.Model):
 
     def __str__(self):
         return self.nom
-
 
 
 class Autorisation(models.Model):
@@ -37,15 +37,16 @@ class Utilisateur(AbstractUser):
         return self.username
 
 
-class Client(models.Model):
+class Client(models.Model):  # 👈 corrigé : plus d’espace avant "class"
     nom = models.CharField(max_length=100)
     email = models.EmailField(
         unique=True,
-        default="inconnu@example.com"  # ✅ valeur par défaut si rien n’est fourni
+        default="inconnu@example.com"
     )
     telephone = models.CharField(max_length=20, blank=True, null=True)
     entreprise = models.CharField(max_length=100, blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
+    date_mise_a_jour = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.nom
@@ -55,25 +56,35 @@ class Contrat(models.Model):
     client = models.ForeignKey(Client, related_name="contrats", on_delete=models.CASCADE)
     date_signature = models.DateField()
     montant = models.DecimalField(max_digits=10, decimal_places=2)
+    date_creation = models.DateTimeField(auto_now_add=True)  # automatique
+    date_mise_a_jour = models.DateTimeField(auto_now=True)   # automatique
 
     def __str__(self):
         return f"Contrat #{self.id} - {self.client.nom}"
 
 
+
 class Evenement(models.Model):
     contrat = models.ForeignKey(Contrat, related_name="evenements", on_delete=models.CASCADE)
     nom = models.CharField(max_length=100)
-    date = models.DateTimeField()
+    description = models.TextField(blank=True, null=True)  # nouveau champ optionnel
+    date = models.DateTimeField(auto_now_add=True)           # rempli automatiquement
     lieu = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.nom} ({self.date.date()})"
 
 
+
 class Communication(models.Model):
     client = models.ForeignKey(Client, related_name="communications", on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)  # déjà automatique
     contenu = models.TextField()
 
     def __str__(self):
         return f"Com {self.client.nom} - {self.date.strftime('%Y-%m-%d')}"
+
+
+
+
+
